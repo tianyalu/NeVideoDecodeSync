@@ -52,7 +52,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void open() {
-        File file = new File(FILE_DIR, "input.mp4");
+//        File file = new File(FILE_DIR, "input.mp4");
+        File file = new File(Environment.getExternalStorageDirectory(), "input.mp4");
         nePlayer.start(file.getAbsolutePath());
     }
 

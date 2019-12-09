@@ -20,5 +20,9 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -L${my_lib_path}")
 
 target_link_libraries( # Specifies the target library.
         neplayer
-        avcodec avfilter avformat avutil swresample swscale
-        ${log-lib})
+        # avcodec avfilter avformat avutil swresample swscale
+        avfilter avformat avcodec avutil swresample swscale
+        ${log-lib}
+        android #系统库,在 D:\AndroidDev\AndroidStudio\sdk\ndk-bundle\platforms\android-21\arch-arm\usr\lib
+        z
+        OpenSLES)
