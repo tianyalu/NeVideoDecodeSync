@@ -282,8 +282,8 @@ E:\AndroidWangYiCloud\NDKWorkspace\NeVideoDecodeSync\app\build\intermediates\cma
   clang++: error: linker command failed with exit code 1 (use -v to see invocation)
   ninja: build stopped: subcommand failed.
 ```
-原因：引入的FFmpeg静态库顺序有问题，后面的库会用到前面库的方法。  
-解决方案：  
+**原因：**引入的FFmpeg静态库顺序有问题，后面的库会用到前面库的方法。  
+**解决方案：**  
 CMakeLists.txt文件中target_link_libraries参数中的  
 ```text
 avcodec avfilter avformat avutil swresample swscale
@@ -296,7 +296,7 @@ avfilter avformat avcodec avutil swresample swscale
 #### 3.2 `avformat_open_input()` 方法返回-13
 解决上面的坑后，终于能正常编译了，但是安装到手机上后，点击“打开”按钮却播放不了。经过调试后发现是`avformat_open_input()`
 方法返回-13了，查网上说是权限问题，我本以为在Manifest文件中添加`android.permission.WRITE_EXTERNAL_STORAGE`权限
-便万事大吉了，结果还是被结果打了脸。后来想了想，这个权限对于Android6.0以上是危险权限，可能需要动态申请，于是在MainActivity
+便万事大吉了，结果还是被现实打了脸。后来想了想，这个权限对于Android6.0以上是危险权限，可能需要动态申请，于是在MainActivity
 中动态申请权限，结果真的解决问题了--这个应该是自己坑了自己，唉！  
 **总结：**  
 除了在Manifest文件中添加权限外，还有在MainActivity中动态申请权限。
