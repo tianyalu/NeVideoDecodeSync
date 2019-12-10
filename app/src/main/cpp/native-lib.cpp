@@ -2,7 +2,6 @@
 #include <string>
 #include <unistd.h>
 
-
 extern "C" {
 #include <libavcodec/avcodec.h>
 #include <libavformat/avformat.h>
@@ -25,17 +24,15 @@ Java_com_sty_ne_video_decodesync_NePlayer_native_1start(JNIEnv *env, jobject thi
                                                         jobject surface) {
     ANativeWindow* nativeWindow = ANativeWindow_fromSurface(env, surface);
     const char* pathChar = env->GetStringUTFChars(path, 0);
-    av_register_all();
+
     //FFmpeg 视频绘制 音频绘制
     //初始化网络模块
     avformat_network_init();
     //总上下文
     AVFormatContext * formatContext = avformat_alloc_context();
-//    AVInputFormat* iformat=av_find_input_format("h264");
     AVDictionary *opts = NULL;
     av_dict_set(&opts, "timeout", "3000000", 0); //3s
     int ret = avformat_open_input(&formatContext, pathChar, NULL, &opts); //0:成功 非0：失败
-//    int ret = avformat_open_input(&formatContext, pathChar, NULL, NULL); //0:成功 非0：失败
     if(ret) {
         return;
     }
@@ -88,7 +85,6 @@ Java_com_sty_ne_video_decodesync_NePlayer_native_1start(JNIEnv *env, jobject thi
         if(ret == AVERROR(EAGAIN)) {
             continue;
         }else if(ret < 0) {
-            avcodec_close(codecContext);
             break;
         }
 
@@ -120,6 +116,7 @@ Java_com_sty_ne_video_decodesync_NePlayer_native_1start(JNIEnv *env, jobject thi
         av_frame_free(&frame);
     }
 
-
+    //释放资源
+    avcodec_close(codecContext);
     env->ReleaseStringUTFChars(path, pathChar);
 }
