@@ -191,7 +191,6 @@ public class MainActivity extends AppCompatActivity {
 
         initView();
         requestPermission();
-//        Log.e("sty", "file dir: " + FILE_DIR);
     }
 
     private void initView() {
