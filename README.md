@@ -282,7 +282,7 @@ E:\AndroidWangYiCloud\NDKWorkspace\NeVideoDecodeSync\app\build\intermediates\cma
   clang++: error: linker command failed with exit code 1 (use -v to see invocation)
   ninja: build stopped: subcommand failed.
 ```
-**原因：**引入的FFmpeg静态库顺序有问题，后面的库会用到前面库的方法。  
+**原因：** 引入的FFmpeg静态库顺序有问题，后面的库会用到前面库的方法。  
 **解决方案：**  
 CMakeLists.txt文件中target_link_libraries参数中的  
 ```text
